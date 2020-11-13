@@ -8,7 +8,7 @@ class RankingList extends React.Component {
       <FlatList
         style={styles.list}
         data={this.props.ranks}
-        keyExtractor={(item) => item.user.id}
+        keyExtractor={(item) => Number(item.user.id).toString()}
         renderItem={({item}) => <RankingItem rank={item} />}
       />
     );
