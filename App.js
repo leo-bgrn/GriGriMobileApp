@@ -21,9 +21,7 @@ const App = () => {
   return (
     <Provider store={Store}>
       <PersistGate persistor={persistor}>
-        <SafeAreaView style={{flex: 1}}>
-          <ChoiceSelectUserOrNavigation />
-        </SafeAreaView>
+        <ChoiceSelectUserOrNavigation />
       </PersistGate>
     </Provider>
   );

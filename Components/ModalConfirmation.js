@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
+import {Button} from 'react-native-elements';
 
 class ModalConfirmation extends React.Component {
   constructor(props) {
@@ -14,19 +15,23 @@ class ModalConfirmation extends React.Component {
         <View style={styles.main_container}>
           <View style={styles.title_container}>
             <Text style={styles.contentTitle}>
-              Es-tu sûr de l'avoir refilé à {username} ?
+              {username} ? Tu es sûr ?
             </Text>
           </View>
           <View style={styles.button_container}>
             <Button
-              style={(styles.button_validate, styles.button)}
+              buttonStyle={styles.button_validate}
               onPress={() => this.props.sendGrigriTo(this.props.user)}
               title="Oui"
+              titleStyle={{color: '#3C5683'}}
+              containerStyle={{flex: 1}}
             />
             <Button
-              style={(styles.button_cancel, styles.button)}
+              buttonStyle={styles.cancel_button}
               onPress={this.props.cancelButton}
               title="Cancel"
+              titleStyle={{color: 'red'}}
+              containerStyle={{flex: 1}}
             />
           </View>
         </View>
@@ -42,28 +47,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   main_container: {
-    backgroundColor: 'white',
-    padding: 22,
+    backgroundColor: '#F5F5F5',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 15,
     borderColor: 'rgba(0, 0, 0, 0.1)',
-    flex: 0.1,
+    flex: 0.15,
     flexDirection: 'column',
     flexWrap: 'wrap',
   },
   contentTitle: {
     fontSize: 20,
-    marginBottom: 12,
+    fontWeight: 'bold',
+    marginBottom: 18,
+    color: '#3C5683',
+    margin: 20,
   },
   button_container: {
     flex: 1,
     flexDirection: 'row',
     width: '100%',
   },
-  button: {
-    flex: 1,
-    width: '40%',
+  cancel_button: {
+    backgroundColor: '#F5F5F5',
+    borderColor: '#D5D5D5',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginLeft: 10,
+    marginRight: 20,
+  },
+  button_validate: {
+    backgroundColor: '#F5F5F5',
+    borderColor: '#D5D5D5',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginLeft: 20,
+    marginRight: 10,
   },
 });
 

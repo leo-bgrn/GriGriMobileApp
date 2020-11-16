@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
+import {Button} from 'react-native-elements';
 
 class ModalSelectUser extends React.Component {
   constructor(props) {
@@ -16,16 +17,22 @@ class ModalSelectUser extends React.Component {
           <View style={styles.users_container}>
             {this.props.users.map((user) => {
               return (
-                <TouchableOpacity
+                <Button
                   key={user.id}
                   onPress={() => this.props.confirmationButton(user)}
-                  style={styles.user_container}>
-                  <Text style={styles.contentTitle}>{user.name}</Text>
-                </TouchableOpacity>
+                  buttonStyle={styles.user_container}
+                  title={user.name}
+                  containerStyle={{width: '50%'}}></Button>
               );
             })}
           </View>
-          <Button onPress={this.props.cancelButton} title="Cancel" />
+          <Button
+            onPress={this.props.cancelButton}
+            title="Cancel"
+            buttonStyle={styles.cancel_button}
+            titleStyle={{color: 'red'}}
+            containerStyle={{width: '50%'}}
+          />
         </View>
       </View>
     );
@@ -39,11 +46,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   main_container: {
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
     padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 15,
     borderColor: 'rgba(0, 0, 0, 0.1)',
     flex: 0.4,
     flexDirection: 'column',
@@ -51,23 +58,36 @@ const styles = StyleSheet.create({
   },
   contentTitle: {
     fontSize: 20,
-    marginBottom: 12,
+    fontWeight: 'bold',
+    marginBottom: 18,
+    color: '#3C5683',
   },
   users_container: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   user_container: {
-    height: 50,
-    width: '46%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'rgb(0, 0, 255)',
+    borderColor: '#596274',
     borderRadius: 10,
     borderWidth: 1,
-    margin: '1%',
+    margin: 3,
+    height: 50,
+    backgroundColor: '#3C5683',
+  },
+  user_content: {
+    fontSize: 20,
+    color: '#3C5683',
+  },
+  cancel_button: {
+    backgroundColor: '#F5F5F5',
+    borderColor: '#D5D5D5',
+    borderWidth: 1,
+    borderRadius: 10
   },
 });
 

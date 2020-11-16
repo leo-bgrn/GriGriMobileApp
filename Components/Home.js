@@ -3,14 +3,16 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  Button,
+  ImageBackground,
 } from 'react-native';
 import CurrentPerson from './CurrentPerson';
-import {getCurrentLocation, getUsers} from '../API/GriGriApi';
+import {getCurrentLocation, getUsers, postNewLocation} from '../API/GriGriApi';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import ModalSelectUser from './ModalSelectUser';
 import ModalConfirmation from './ModalConfirmation';
+import {connect} from 'react-redux';
+import {Button} from 'react-native-elements';
 
 class Home extends React.Component {
   constructor(props) {
@@ -84,8 +86,8 @@ class Home extends React.Component {
   }
 
   sendGrigriTo(user) {
-    console.log('Sending grigri to : ' + user);
-    this.toggleModalConfirmation();
+    postNewLocation(user.id).then(() => this.toggleModalConfirmation());
+    setTimeout(() => this._loadData(), 1000);
   }
 
   async _deleteCache() {
@@ -102,7 +104,9 @@ class Home extends React.Component {
       return this._displayLoading();
     }
     return (
-      <View style={styles.main_container}>
+      <ImageBackground
+        style={styles.main_container}
+        source={require('../Images/background.png')}>
         <CurrentPerson
           user={this.state.user}
           totalPoints={this.state.totalPoints}
@@ -110,11 +114,20 @@ class Home extends React.Component {
           since={this.state.since}
           lastUser={this.state.lastUser}
         />
+        {this.props.whoAmI === this.state.user && (
+          <Button
+            buttonStyle={styles.button_style}
+            titleStyle={styles.title_button_style}
+            onPress={this.toggleModalSelectUser}
+            title="Je l'ai refilé à quelqu'un"
+          />
+        )}
         <Button
-          onPress={this.toggleModalSelectUser}
-          title="Je l'ai refilé à quelqu'un"
+          buttonStyle={styles.button_style}
+          titleStyle={styles.title_button_style}
+          onPress={this._deleteCache}
+          title="Delete cache"
         />
-        <Button onPress={this._deleteCache} title="Delete cache" />
         <Modal isVisible={this.state.modalSelectUserIsVisible}>
           <ModalSelectUser
             cancelButton={this.toggleModalSelectUser}
@@ -129,7 +142,7 @@ class Home extends React.Component {
             sendGrigriTo={this.sendGrigriTo}
           />
         </Modal>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -146,6 +159,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  button_style: {
+    backgroundColor: '#F5F5F5',
+    marginTop: 15,
+  },
+  title_button_style: {
+    color: '#3C5683',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    elevation: 20,
+  },
 });
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    whoAmI: state.setWhoAmI.whoAmI,
+  };
+};
+export default connect(mapStateToProps)(Home);
