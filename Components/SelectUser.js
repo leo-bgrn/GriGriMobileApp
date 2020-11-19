@@ -3,9 +3,8 @@ import {getUsers} from '../API/GriGriApi';
 import {
   View,
   StyleSheet,
-  Text,
-  FlatList,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import SelectUserItem from './SelectUserItem';
 import {connect} from 'react-redux';
@@ -47,13 +46,13 @@ class SelectUser extends React.Component {
     }
     return (
       <View style={styles.main_container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Qui es tu ?</Text>
+        </View>
         <View style={styles.list_container}>
-          <FlatList
-            style={styles.list}
-            data={this.state.users}
-            keyExtractor={(item) => Number(item.id).toString()}
-            renderItem={({item}) => <SelectUserItem item={item} />}
-          />
+          {this.state.users.map((item) => (
+            <SelectUserItem key={item.id} item={item} />
+          ))}
         </View>
       </View>
     );
@@ -61,12 +60,29 @@ class SelectUser extends React.Component {
 }
 const styles = StyleSheet.create({
   main_container: {
-    backgroundColor: 'red',
+    backgroundColor: '#EBEBEB',
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 0.4,
+  },
+  titleText: {
+    fontSize: 50,
+    fontFamily: 'Helvetica Neue',
+    color: '#496E98',
+    fontWeight: 'bold',
+    marginBottom: 50,
   },
   list_container: {
-    margin: 5,
-    flex: 1,
+    flex: 0.6,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center"
   },
   loading_container: {
     alignItems: 'center',

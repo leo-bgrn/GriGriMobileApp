@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
 
 class SelectUserItem extends React.Component {
@@ -13,19 +13,23 @@ class SelectUserItem extends React.Component {
       <TouchableOpacity
         style={styles.item_container}
         onPress={() => this._setWhoAmI()}>
-        <Text>{this.props.item.name}</Text>
+        <Image
+          style={styles.image}
+          source={{
+            uri: this.props.item.avatar,
+          }}
+        />
       </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  item_container: {
-    backgroundColor: 'green',
-    margin: 5,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+  image: {
+    height: 100,
+    width: 100,
+    margin: 10,
+    borderRadius: 100,
   },
 });
 

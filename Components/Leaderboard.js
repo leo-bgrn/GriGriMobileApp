@@ -1,18 +1,18 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import {View, ActivityIndicator, ImageBackground, Text} from 'react-native';
-import {getHistoric} from '../API/GriGriApi';
-import HistoricList from './HistoricList';
+import {StyleSheet} from 'react-native';
+import {View, ActivityIndicator, SafeAreaView, Text} from 'react-native';
+import {getPoints} from '../API/GriGriApi';
+import LeaderboardPodium from './LeaderboardPodium';
+import LeaderboardPlaces from './LeaderboardPlaces';
 
-class Historic extends React.Component {
+class Ranking extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      historic: [],
+      ranks: [],
       isLoading: false,
     };
   }
-
   _displayLoading() {
     return (
       <View style={styles.loading_container}>
@@ -23,10 +23,18 @@ class Historic extends React.Component {
 
   _loadData() {
     this.setState({isLoading: true});
-    getHistoric().then((data) => {
-      data.sort((a, b) => (a.from < b.from ? 1 : -1));
+    getPoints().then((data) => {
+      data.sort((a, b) => (a.points < b.points ? 1 : -1));
+      const ranks = data.map((rank) => {
+        return {
+          id: rank.user.id,
+          avatar: rank.user.avatar,
+          name: rank.user.name,
+          points: Math.floor(rank.points).toString(),
+        };
+      });
       this.setState({
-        historic: data,
+        ranks: ranks,
         isLoading: false,
       });
     });
@@ -45,12 +53,17 @@ class Historic extends React.Component {
         <View style={styles.upperContainer}>
           <SafeAreaView>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>Historique</Text>
+              <Text style={styles.titleText}>Leaderboard</Text>
             </View>
           </SafeAreaView>
+          <LeaderboardPodium
+            userFirst={this.state.ranks[0]}
+            userSecond={this.state.ranks[1]}
+            userThird={this.state.ranks[2]}
+          />
         </View>
         <View style={styles.bottomContainer}>
-          <HistoricList historic={this.state.historic} />
+          <LeaderboardPlaces ranks={this.state.ranks.slice(3, 7)} />
         </View>
       </View>
     );
@@ -59,12 +72,16 @@ class Historic extends React.Component {
 
 const styles = StyleSheet.create({
   mainContainer: {
+    backgroundColor: '#EBEBEB',
     flex: 1,
-    alignItems: 'stretch',
-    backgroundColor: '#f0f0f0',
+  },
+  loading_container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   upperContainer: {
-    flex: 0.2,
+    flex: 0.4,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#496E98',
@@ -77,22 +94,12 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 20,
   },
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  bottomContainer: {flex: 0.6},
   titleText: {
     margin: 10,
     fontSize: 30,
     color: '#EBEBEB',
   },
-  loading_container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  bottomContainer: {flex: 0.8},
 });
 
-export default Historic;
+export default Ranking;

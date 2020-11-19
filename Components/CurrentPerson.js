@@ -4,17 +4,18 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 class CurrentPerson extends React.Component {
   render() {
     const {user, totalPoints, pointsDueToNow, lastUser} = this.props;
+    const userAvatarSource =
+      user != null ? {uri: user.avatar} : {uri: defaultAvatarUrl};
+    const username = user != null ? user.name : '';
     return (
-      <View style={[styles.main_container, styles.shadow]}>
+      <View style={styles.main_container}>
         <View style={styles.title_container}>
-          <Image
-            style={styles.image}
-            source={{
-              uri:
-                'https://scontent-mrs2-1.xx.fbcdn.net/v/t1.0-9/120859917_3794479147247737_3076943570474862987_n.jpg?_nc_cat=105&ccb=2&_nc_sid=09cbfe&_nc_ohc=_6z83iS_af4AX_Jc8ln&_nc_ht=scontent-mrs2-1.xx&oh=4f8e3164b10afd2aca8bc2402b2f4423&oe=5FD7F077',
-            }}
-          />
-          <Text style={styles.title_text}>{user} a le grigri</Text>
+          <View style={styles.image_container}>
+            <Image style={styles.image} source={userAvatarSource} />
+          </View>
+          {user != null && (
+            <Text style={styles.title_text}>{username} a le grigri</Text>
+          )}
         </View>
         <View style={styles.details_container}>
           <Text style={styles.details_text}>Depuis {pointsDueToNow} jours</Text>
@@ -28,53 +29,46 @@ class CurrentPerson extends React.Component {
   }
 }
 
+const defaultAvatarUrl =
+  'https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2Ficon%2Favatar-370&psig=AOvVaw0PM2rAXKXG55S7Mos1E4Nb&ust=1605721674946000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOidjMORiu0CFQAAAAAdAAAAABAD';
 const styles = StyleSheet.create({
   main_container: {
-    height: 270,
-    width: 300,
-    maxWidth: '90%',
-    maxHeight: '70%',
-    backgroundColor: '#F5F5F5',
-    borderWidth: 5,
-    borderRadius: 20,
-    borderColor: '#F5F5F5',
+    //backgroundColor: 'black',
+    marginTop: 50,
   },
   title_container: {
-    flex: 0.5,
     alignItems: 'center',
-    margin: 20,
+    //backgroundColor: 'yellow',
   },
   image: {
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+    height: 180,
+    width: 180,
+    borderRadius: 100,
+  },
+  image_container: {
+    borderWidth: 7,
+    borderRadius: 100,
+    borderColor: '#9D4141',
   },
   title_text: {
-    fontSize: 23,
-    color: '#3C5683',
-    margin: 12,
+    fontSize: 30,
+    color: '#E5E5E5',
+    margin: 20,
     fontWeight: 'bold',
+    fontFamily: 'Helvetica Neue',
   },
   details_container: {
-    marginTop: 17,
-    flex: 0.5,
     justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'green',
+    marginTop: 5,
   },
   details_text: {
-    color: '#3C5683',
-    margin: 3,
-    fontSize: 16,
-    marginLeft: 10,
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-    elevation: 20,
+    color: '#A3A3A3',
+    marginTop: 10,
+    fontFamily: "Helvetica Neue",
+    fontSize: 18,
+    fontStyle: 'italic'
   },
 });
 

@@ -1,6 +1,8 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {Button} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
 
 class ModalConfirmation extends React.Component {
   constructor(props) {
@@ -9,28 +11,40 @@ class ModalConfirmation extends React.Component {
 
   render() {
     const {user} = this.props;
-    const username = user != null ? user.name : '??';
+    const myself = this.props.users.filter(
+      (user) => user.name == this.props.whoAmI,
+    )[0];
     return (
-      <View style={styles.background_container}>
-        <View style={styles.main_container}>
-          <View style={styles.title_container}>
-            <Text style={styles.contentTitle}>
-              {username} ? Tu es sûr ?
-            </Text>
+      <View style={styles.backgroundContainer}>
+        <View style={styles.mainContainer}>
+          <View style={styles.titleContainer}>
+            <Image
+              style={[styles.image, styles.imageSelf]}
+              source={{
+                uri: myself.avatar,
+              }}
+            />
+            <Icon name="chevron-forward-outline" type="ionicon" />
+            <Image
+              style={[styles.image]}
+              source={{
+                uri: user.avatar,
+              }}
+            />
           </View>
           <View style={styles.button_container}>
             <Button
-              buttonStyle={styles.button_validate}
-              onPress={() => this.props.sendGrigriTo(this.props.user)}
-              title="Oui"
-              titleStyle={{color: '#3C5683'}}
+              buttonStyle={styles.cancel_button}
+              onPress={this.props.cancelButton}
+              title="Annuler"
+              titleStyle={{color: 'red'}}
               containerStyle={{flex: 1}}
             />
             <Button
-              buttonStyle={styles.cancel_button}
-              onPress={this.props.cancelButton}
-              title="Cancel"
-              titleStyle={{color: 'red'}}
+              buttonStyle={styles.button_validate}
+              onPress={() => this.props.sendGrigriTo(this.props.user)}
+              title="Confirmer"
+              titleStyle={{color: '#EBEBEB'}}
               containerStyle={{flex: 1}}
             />
           </View>
@@ -41,42 +55,32 @@ class ModalConfirmation extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  background_container: {
+  backgroundContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  main_container: {
+  mainContainer: {
     backgroundColor: '#F5F5F5',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
     borderColor: 'rgba(0, 0, 0, 0.1)',
-    flex: 0.15,
     flexDirection: 'column',
     flexWrap: 'wrap',
   },
-  contentTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 18,
-    color: '#3C5683',
-    margin: 20,
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button_container: {
-    flex: 1,
     flexDirection: 'row',
     width: '100%',
+    marginTop: 10,
+    marginBottom: 15,
   },
   cancel_button: {
-    backgroundColor: '#F5F5F5',
-    borderColor: '#D5D5D5',
-    borderWidth: 1,
-    borderRadius: 10,
-    marginLeft: 10,
-    marginRight: 20,
-  },
-  button_validate: {
     backgroundColor: '#F5F5F5',
     borderColor: '#D5D5D5',
     borderWidth: 1,
@@ -84,6 +88,29 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 10,
   },
+  button_validate: {
+    backgroundColor: '#496E98',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginLeft: 10,
+    marginRight: 20,
+  },
+  image: {
+    height: 80,
+    width: 80,
+    margin: 10,
+    borderRadius: 100,
+    borderColor: '#9D4141',
+    borderWidth: 5,
+  },
+  imageSelf: {
+    borderColor: '#619D41',
+  },
 });
 
-export default ModalConfirmation;
+const mapStateToProps = (state) => {
+  return {
+    whoAmI: state.setWhoAmI.whoAmI,
+  };
+};
+export default connect(mapStateToProps)(ModalConfirmation);

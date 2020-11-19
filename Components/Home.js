@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  ImageBackground,
-} from 'react-native';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import CurrentPerson from './CurrentPerson';
 import {getCurrentLocation, getUsers, postNewLocation} from '../API/GriGriApi';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -19,6 +14,7 @@ class Home extends React.Component {
     super(props);
     this.state = {
       user: null,
+      username: null,
       totalPoints: 0,
       pointsDueToNow: 0,
       since: null,
@@ -49,7 +45,8 @@ class Home extends React.Component {
       getUsers().then((users) => {
         const since = new Date(data.since);
         this.setState({
-          user: data.user.name,
+          user: data.user,
+          username: data.user.name,
           totalPoints: Math.floor(data.user.totalPoints),
           pointsDueToNow: Math.floor(data.user.pointsDueToNow),
           since: since,
@@ -104,30 +101,32 @@ class Home extends React.Component {
       return this._displayLoading();
     }
     return (
-      <ImageBackground
-        style={styles.main_container}
-        source={require('../Images/background.png')}>
-        <CurrentPerson
-          user={this.state.user}
-          totalPoints={this.state.totalPoints}
-          pointsDueToNow={this.state.pointsDueToNow}
-          since={this.state.since}
-          lastUser={this.state.lastUser}
-        />
-        {this.props.whoAmI === this.state.user && (
+      <View style={styles.main_container}>
+        <View style={styles.currentPersonContainer}>
+          <CurrentPerson
+            user={this.state.user}
+            totalPoints={this.state.totalPoints}
+            pointsDueToNow={this.state.pointsDueToNow}
+            since={this.state.since}
+            lastUser={this.state.lastUser}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          {this.props.whoAmI === this.state.username && (
+            <Button
+              buttonStyle={styles.button_style}
+              titleStyle={styles.title_button_style}
+              onPress={this.toggleModalSelectUser}
+              title="Je l'ai refilé à quelqu'un"
+            />
+          )}
           <Button
             buttonStyle={styles.button_style}
             titleStyle={styles.title_button_style}
-            onPress={this.toggleModalSelectUser}
-            title="Je l'ai refilé à quelqu'un"
+            onPress={this._deleteCache}
+            title="Delete cache"
           />
-        )}
-        <Button
-          buttonStyle={styles.button_style}
-          titleStyle={styles.title_button_style}
-          onPress={this._deleteCache}
-          title="Delete cache"
-        />
+        </View>
         <Modal isVisible={this.state.modalSelectUserIsVisible}>
           <ModalSelectUser
             cancelButton={this.toggleModalSelectUser}
@@ -139,10 +138,11 @@ class Home extends React.Component {
           <ModalConfirmation
             cancelButton={this.toggleModalConfirmation}
             user={this.state.modalUserSelected}
+            users={this.state.allUsers}
             sendGrigriTo={this.sendGrigriTo}
           />
         </Modal>
-      </ImageBackground>
+      </View>
     );
   }
 }
@@ -150,9 +150,28 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
+    backgroundColor: '#EBEBEB',
+  },
+  currentPersonContainer: {
+    flex: 0.75,
+    backgroundColor: '#496E98',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 6,
+    elevation: 20,
+  },
+  buttonContainer: {
+    flex: 0.25,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -10,
   },
   loading_container: {
     alignItems: 'center',
@@ -160,21 +179,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button_style: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#496E98',
     marginTop: 15,
   },
   title_button_style: {
-    color: '#3C5683',
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-    elevation: 20,
+    color: '#EBEBEB',
   },
 });
 

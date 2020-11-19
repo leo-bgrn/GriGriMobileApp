@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Home from '../Components/Home';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import Ranking from '../Components/Ranking';
+import Leaderboard from '../Components/Leaderboard';
 import Historic from '../Components/Historic';
+import {Icon} from 'react-native-elements';
 
 const AppNavigator = createBottomTabNavigator(
   {
@@ -12,25 +13,15 @@ const AppNavigator = createBottomTabNavigator(
       screen: Home,
       navigationOptions: {
         tabBarIcon: () => {
-          return (
-            <Image
-              source={require('../Images/ic_home.png')}
-              style={styles.icon}
-            />
-          );
+          return <Icon name="home" color="#496E98" type="ionicon" size={30} />;
         },
       },
     },
-    Ranking: {
-      screen: Ranking,
+    Leaderboard: {
+      screen: Leaderboard,
       navigationOptions: {
         tabBarIcon: () => {
-          return (
-            <Image
-              source={require('../Images/ic_ranking.png')}
-              style={styles.icon}
-            />
-          );
+          return <Icon name="podium" color="#496E98" type="ionicon" size={30} />;
         },
       },
     },
@@ -38,12 +29,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: Historic,
       navigationOptions: {
         tabBarIcon: () => {
-          return (
-            <Image
-              source={require('../Images/ic_historic.png')}
-              style={styles.icon}
-            />
-          );
+          return <Icon name="history" color="#496E98" type="material" size={30} />;
         },
       },
     },
