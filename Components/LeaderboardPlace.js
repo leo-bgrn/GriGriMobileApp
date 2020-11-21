@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, Image, Text, Dimensions} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 class LeaderboardPlace extends React.Component {
   render() {
@@ -22,16 +23,17 @@ class LeaderboardPlace extends React.Component {
 
 const defaultAvatarUrl =
   'https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2Ficon%2Favatar-370&psig=AOvVaw0PM2rAXKXG55S7Mos1E4Nb&ust=1605721674946000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOidjMORiu0CFQAAAAAdAAAAABAD';
-
-const styles = StyleSheet.create({
+const windowHeight = Dimensions.get('window').height;
+const styles = EStyleSheet.create({
   container: {
     backgroundColor: '#FAFAFA',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    borderRadius: 20,
+    marginTop: '10rem',
+    marginLeft: '20rem',
+    marginRight: '20rem',
+    marginBottom: '10rem',
+    borderRadius: '20rem',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -41,26 +43,30 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 20,
   },
-  avatar: {
-    height: 60,
-    width: 60,
-    borderRadius: 100,
-    margin: 15,
+  avatarContainer: {
+    flex: 0.3,
   },
-  avatarContainer: {},
+  avatar: {
+    height: (windowHeight * 0.6) / 4 / 2,
+    aspectRatio: 1,
+    borderRadius: 100,
+    margin: '15rem',
+  },
   pseudoText: {
-    margin: 10,
+    margin: '10rem',
     fontFamily: 'Helvetica Neue',
-    fontSize: 25,
+    fontSize: '25rem',
     color: '#585858',
+    flex: 0.3,
   },
   pointsText: {
-    margin: 10,
+    margin: '10rem',
     color: '#A3A3A3',
     fontFamily: 'Helvetica Neue',
-    fontSize: 15,
+    fontSize: '15rem',
     fontStyle: 'italic',
-    marginTop: 15,
+    marginTop: '15rem',
+    flex: 0.3,
   },
 });
 

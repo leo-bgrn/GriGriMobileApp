@@ -1,8 +1,9 @@
 import moment from 'moment';
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import 'moment/locale/fr';
 import {Icon} from 'react-native-elements';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 class HistoricItem extends React.Component {
   _displayFrom(item) {
@@ -41,15 +42,16 @@ class HistoricItem extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
+const windowWidth = Dimensions.get('window').width;
+const styles = EStyleSheet.create({
   main_container: {
-    height: 80,
-    marginLeft: 20,
-    marginRight: 20,
+    height: '70rem',
+    marginLeft: '20rem',
+    marginRight: '20rem',
     backgroundColor: '#F5F5F5',
     flexDirection: 'row',
-    marginTop: 15,
+    marginTop: '8rem',
+    marginBottom: '7rem',
     borderRadius: 20,
     flex: 1,
     shadowColor: '#000',
@@ -63,21 +65,25 @@ const styles = StyleSheet.create({
   },
   content_container: {
     flex: 1,
-    marginLeft: 30,
+    marginLeft: '30rem',
     justifyContent: 'center',
   },
   image: {
-    height: 50,
-    width: 50,
+    height: windowWidth * 0.12,
+    aspectRatio: 1,
     borderRadius: 50,
-    margin: 10
+    margin: "10rem",
   },
-  dates_text: {},
+  dates_text: {
+    fontFamily: "Helvetica Neue",
+    fontSize: "15rem"
+  },
   avatarsContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: "10rem"
   },
 });
 

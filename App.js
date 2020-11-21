@@ -7,14 +7,17 @@
  */
 
 import React from 'react';
-import {SafeAreaView} from 'react-navigation';
-import Navigation from './Navigation/Navigation';
 import {Provider} from 'react-redux';
 import Store from './Store/configureStore';
 import ChoiceSelectUserOrNavigation from './Components/ChoiceSelectUserOrNavigation';
+import {Dimensions} from 'react-native';
 
 import {PersistGate} from 'redux-persist/es/integration/react';
 import {persistStore} from 'redux-persist';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+const entireScreenWidth = Dimensions.get('window').width;
+EStyleSheet.build({$rem: entireScreenWidth / 380});
 
 const App = () => {
   let persistor = persistStore(Store);

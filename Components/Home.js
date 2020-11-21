@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Dimensions, Text} from 'react-native';
 import CurrentPerson from './CurrentPerson';
 import {getCurrentLocation, getUsers, postNewLocation} from '../API/GriGriApi';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,6 +8,7 @@ import ModalSelectUser from './ModalSelectUser';
 import ModalConfirmation from './ModalConfirmation';
 import {connect} from 'react-redux';
 import {Button} from 'react-native-elements';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 class Home extends React.Component {
   constructor(props) {
@@ -147,7 +148,7 @@ class Home extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   main_container: {
     flex: 1,
     backgroundColor: '#EBEBEB',
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -10,
+    marginTop: "-10rem",
   },
   loading_container: {
     alignItems: 'center',
@@ -180,7 +181,8 @@ const styles = StyleSheet.create({
   },
   button_style: {
     backgroundColor: '#496E98',
-    marginTop: 15,
+    marginTop: "15rem",
+    borderRadius: 10,
   },
   title_button_style: {
     color: '#EBEBEB',

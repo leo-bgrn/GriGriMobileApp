@@ -1,8 +1,9 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {View, ActivityIndicator, ImageBackground, Text} from 'react-native';
+import {View, ActivityIndicator, Text, Dimensions} from 'react-native';
 import {getHistoric} from '../API/GriGriApi';
 import HistoricList from './HistoricList';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 class Historic extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Historic extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: 'stretch',
@@ -83,8 +84,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleText: {
-    margin: 10,
-    fontSize: 30,
+    margin: '10rem',
+    fontSize: '30rem',
     color: '#EBEBEB',
   },
   loading_container: {
@@ -92,7 +93,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-  bottomContainer: {flex: 0.8},
+  bottomContainer: {
+    flex: 0.8,
+  },
 });
 
 export default Historic;

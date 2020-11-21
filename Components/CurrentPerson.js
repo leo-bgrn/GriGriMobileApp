@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 class CurrentPerson extends React.Component {
   render() {
@@ -31,44 +32,40 @@ class CurrentPerson extends React.Component {
 
 const defaultAvatarUrl =
   'https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2Ficon%2Favatar-370&psig=AOvVaw0PM2rAXKXG55S7Mos1E4Nb&ust=1605721674946000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOidjMORiu0CFQAAAAAdAAAAABAD';
-const styles = StyleSheet.create({
-  main_container: {
-    //backgroundColor: 'black',
-    marginTop: 50,
-  },
+const windowWidth = Dimensions.get('window').width;
+const styles = EStyleSheet.create({
+  main_container: {},
   title_container: {
     alignItems: 'center',
-    //backgroundColor: 'yellow',
   },
   image: {
-    height: 180,
-    width: 180,
-    borderRadius: 100,
+    height: windowWidth * 0.5,
+    aspectRatio: 1,
+    borderRadius: 1000,
   },
   image_container: {
     borderWidth: 7,
-    borderRadius: 100,
+    borderRadius: 1000,
     borderColor: '#9D4141',
   },
   title_text: {
-    fontSize: 30,
+    fontSize: '30rem',
     color: '#E5E5E5',
-    margin: 20,
+    marginTop: '20rem',
     fontWeight: 'bold',
     fontFamily: 'Helvetica Neue',
   },
   details_container: {
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: 'green',
-    marginTop: 5,
+    marginTop: '5rem',
   },
   details_text: {
     color: '#A3A3A3',
-    marginTop: 10,
-    fontFamily: "Helvetica Neue",
-    fontSize: 18,
-    fontStyle: 'italic'
+    marginTop: '10rem',
+    fontFamily: 'Helvetica Neue',
+    fontSize: '18rem',
+    fontStyle: 'italic',
   },
 });
 

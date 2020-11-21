@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {View, ActivityIndicator, SafeAreaView, Text} from 'react-native';
+import {View, ActivityIndicator, SafeAreaView} from 'react-native';
 import {getPoints} from '../API/GriGriApi';
 import LeaderboardPodium from './LeaderboardPodium';
 import LeaderboardPlaces from './LeaderboardPlaces';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 class Ranking extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class Ranking extends React.Component {
   _loadData() {
     this.setState({isLoading: true});
     getPoints().then((data) => {
-      data.sort((a, b) => (a.points < b.points ? 1 : -1));
+      data.sort((a, b) => (a.points > b.points ? 1 : -1));
       const ranks = data.map((rank) => {
         return {
           id: rank.user.id,
@@ -51,11 +51,7 @@ class Ranking extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.upperContainer}>
-          <SafeAreaView>
-            <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>Leaderboard</Text>
-            </View>
-          </SafeAreaView>
+          <SafeAreaView></SafeAreaView>
           <LeaderboardPodium
             userFirst={this.state.ranks[0]}
             userSecond={this.state.ranks[1]}
@@ -70,7 +66,7 @@ class Ranking extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   mainContainer: {
     backgroundColor: '#EBEBEB',
     flex: 1,
@@ -95,11 +91,6 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   bottomContainer: {flex: 0.6},
-  titleText: {
-    margin: 10,
-    fontSize: 30,
-    color: '#EBEBEB',
-  },
 });
 
 export default Ranking;
