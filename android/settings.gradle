@@ -1,3 +1,5 @@
 rootProject.name = 'GriGriMobileApp'
+include ':react-native-shape-image-view'
+project(':react-native-shape-image-view').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-shape-image-view/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
