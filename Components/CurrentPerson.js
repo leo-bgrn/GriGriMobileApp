@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import * as Animatable from 'react-native-animatable';
 
 class CurrentPerson extends React.Component {
   render() {
@@ -9,7 +10,11 @@ class CurrentPerson extends React.Component {
       user != null ? {uri: user.avatar} : {uri: defaultAvatarUrl};
     const username = user != null ? user.name : '';
     return (
-      <View style={styles.main_container}>
+      <Animatable.View
+        animation="bounceIn"
+        delay={1000}
+        useNativeDriver={true}
+        style={styles.main_container}>
         <View style={styles.title_container}>
           <View style={styles.image_container}>
             <Image style={styles.image} source={userAvatarSource} />
@@ -25,7 +30,7 @@ class CurrentPerson extends React.Component {
           </Text>
           <Text style={styles.details_text}>Donné par {lastUser}</Text>
         </View>
-      </View>
+      </Animatable.View>
     );
   }
 }

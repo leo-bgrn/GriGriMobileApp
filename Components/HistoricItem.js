@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import 'moment/locale/fr';
 import {Icon} from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import * as Animatable from 'react-native-animatable';
 
 class HistoricItem extends React.Component {
   _displayFrom(item) {
@@ -21,7 +22,11 @@ class HistoricItem extends React.Component {
       return <View></View>;
     }
     return (
-      <View style={styles.main_container}>
+      <Animatable.View
+        animation="slideInRight"
+        delay={1000 + itemIndex * 100}
+        duration={600}
+        style={styles.main_container}>
         <View style={styles.avatarsContainer}>
           <Image
             style={styles.image}
@@ -38,7 +43,7 @@ class HistoricItem extends React.Component {
           />
         </View>
         <View style={styles.content_container}>{this._displayFrom(item)}</View>
-      </View>
+      </Animatable.View>
     );
   }
 }
@@ -72,18 +77,18 @@ const styles = EStyleSheet.create({
     height: windowWidth * 0.12,
     aspectRatio: 1,
     borderRadius: 50,
-    margin: "10rem",
+    margin: '10rem',
   },
   dates_text: {
-    fontFamily: "Helvetica Neue",
-    fontSize: "15rem"
+    fontFamily: 'Helvetica Neue',
+    fontSize: '15rem',
   },
   avatarsContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: "10rem"
+    margin: '10rem',
   },
 });
 

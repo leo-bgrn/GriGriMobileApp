@@ -4,6 +4,8 @@ import {View, ActivityIndicator, Text, Dimensions} from 'react-native';
 import {getHistoric} from '../API/GriGriApi';
 import HistoricList from './HistoricList';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import * as Animatable from 'react-native-animatable';
+import LottieView from 'lottie-react-native';
 
 class Historic extends React.Component {
   constructor(props) {
@@ -17,20 +19,49 @@ class Historic extends React.Component {
   _displayLoading() {
     return (
       <View style={styles.loading_container}>
-        <ActivityIndicator size="large" />
+        <LottieView
+          source={require('../Animations/loading-dots.json')}
+          autoPlay
+          loop
+          style={{width: windowWidth * 0.3, aspectRatio: 1}}
+          colorFilters={[
+            {
+              keypath: 'Shape Layer 1',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 2',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 3',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 4',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 5',
+              color: '#496E98',
+            },
+          ]}
+        />
       </View>
     );
   }
 
   _loadData() {
     this.setState({isLoading: true});
-    getHistoric().then((data) => {
-      data.sort((a, b) => (a.from < b.from ? 1 : -1));
-      this.setState({
-        historic: data,
-        isLoading: false,
+    setTimeout(() => {
+      getHistoric().then((data) => {
+        data.sort((a, b) => (a.from < b.from ? 1 : -1));
+        this.setState({
+          historic: data,
+          isLoading: false,
+        });
       });
-    });
+    }, 500);
   }
 
   componentDidMount() {
@@ -43,13 +74,13 @@ class Historic extends React.Component {
     }
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.upperContainer}>
+        <Animatable.View animation="slideInDown" style={styles.upperContainer}>
           <SafeAreaView>
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>Historique</Text>
             </View>
           </SafeAreaView>
-        </View>
+        </Animatable.View>
         <View style={styles.bottomContainer}>
           <HistoricList historic={this.state.historic} />
         </View>
@@ -58,11 +89,12 @@ class Historic extends React.Component {
   }
 }
 
+const windowWidth = Dimensions.get('window').width;
 const styles = EStyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#EBEBEB',
   },
   upperContainer: {
     flex: 0.2,
@@ -92,6 +124,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    backgroundColor: '#EBEBEB',
   },
   bottomContainer: {
     flex: 0.8,

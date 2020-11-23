@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import * as Animatable from 'react-native-animatable';
 
 class LeaderboardPodium extends React.Component {
   render() {
@@ -21,31 +22,39 @@ class LeaderboardPodium extends React.Component {
 
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.secondContainer}>
+        <Animatable.View
+          animation="fadeIn"
+          delay={1700}
+          style={styles.secondContainer}>
           <View style={styles.secondAvatarContainer}>
             <Image source={userSecondAvatar} style={styles.secondAvatar} />
           </View>
           <Text style={styles.secondPseudoText}>{userSecondName}</Text>
           <Text style={styles.secondPointsText}>{userSecondPoints} points</Text>
-        </View>
-        <View style={styles.firstContainer}>
-          <Image
-            source={require('../Images/ic_crown.png')}
-            style={styles.crownImage}
-          />
+        </Animatable.View>
+        <Animatable.View animation="fadeIn" delay={1000} style={styles.firstContainer}>
+          <Animatable.View animation="fadeInDown">
+            <Image
+              source={require('../Images/ic_crown.png')}
+              style={styles.crownImage}
+            />
+          </Animatable.View>
           <View style={styles.firstAvatarContainer}>
             <Image source={userFirstAvatar} style={styles.firstAvatar} />
           </View>
           <Text style={styles.firstPseudoText}>{userFirstName}</Text>
           <Text style={styles.firstPointsText}>{userFirstPoints} points</Text>
-        </View>
-        <View style={styles.thirdContainer}>
+        </Animatable.View>
+        <Animatable.View
+          animation="fadeIn"
+          delay={2400}
+          style={styles.thirdContainer}>
           <View style={styles.thirdAvatarContainer}>
             <Image source={userThirdAvatar} style={styles.thirdAvatar} />
           </View>
           <Text style={styles.thirdPseudoText}>{userThirdName}</Text>
           <Text style={styles.thirdPointsText}>{userThirdPoints} points</Text>
-        </View>
+        </Animatable.View>
       </View>
     );
   }
@@ -75,7 +84,7 @@ const styles = EStyleSheet.create({
   crownImage: {
     height: windowWidth * 0.08,
     aspectRatio: 1,
-    margin: "5rem",
+    margin: '5rem',
   },
   crownTextContainer: {
     flex: 1,
@@ -89,8 +98,8 @@ const styles = EStyleSheet.create({
     borderColor: '#C9AA00',
   },
   firstPseudoText: {
-    marginTop: "10rem",
-    marginBottom: "5rem",
+    marginTop: '10rem',
+    marginBottom: '5rem',
     fontFamily: 'Helvetica Neue',
     fontSize: '25rem',
     color: '#E5E5E5',
@@ -100,7 +109,7 @@ const styles = EStyleSheet.create({
     fontFamily: 'Helvetica Neue',
     fontSize: '18rem',
     fontStyle: 'italic',
-    marginBottom: "15rem",
+    marginBottom: '15rem',
   },
   secondContainer: {
     flex: 0.33,
@@ -114,15 +123,15 @@ const styles = EStyleSheet.create({
     borderRadius: 100,
   },
   secondAvatarContainer: {
-    borderWidth: "5rem",
+    borderWidth: '5rem',
     borderRadius: 100,
     borderColor: '#C0C0C0',
   },
   secondPseudoText: {
-    marginTop: "10rem",
-    marginBottom: "5rem",
+    marginTop: '10rem',
+    marginBottom: '5rem',
     fontFamily: 'Helvetica Neue',
-    fontSize: "25rem",
+    fontSize: '25rem',
     color: '#E5E5E5',
   },
   secondPointsText: {
@@ -130,7 +139,7 @@ const styles = EStyleSheet.create({
     fontFamily: 'Helvetica Neue',
     fontSize: '18rem',
     fontStyle: 'italic',
-    marginBottom: "15rem",
+    marginBottom: '15rem',
   },
   thirdContainer: {
     flex: 0.33,
@@ -144,13 +153,13 @@ const styles = EStyleSheet.create({
     borderRadius: 100,
   },
   thirdAvatarContainer: {
-    borderWidth: "5rem",
+    borderWidth: '5rem',
     borderRadius: 100,
     borderColor: '#CD7F32',
   },
   thirdPseudoText: {
-    marginTop: "10rem",
-    marginBottom: "5rem",
+    marginTop: '10rem',
+    marginBottom: '5rem',
     fontFamily: 'Helvetica Neue',
     fontSize: '25rem',
     color: '#E5E5E5',
@@ -160,7 +169,7 @@ const styles = EStyleSheet.create({
     fontFamily: 'Helvetica Neue',
     fontSize: '18rem',
     fontStyle: 'italic',
-    marginBottom: "10rem",
+    marginBottom: '10rem',
   },
 });
 

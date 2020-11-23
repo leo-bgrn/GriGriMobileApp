@@ -12,24 +12,30 @@ const AppNavigator = createBottomTabNavigator(
     Home: {
       screen: Home,
       navigationOptions: {
-        tabBarIcon: () => {
-          return <Icon name="home" color="#496E98" type="ionicon" size={30} />;
+        tabBarIcon: ({tintColor}) => {
+          return (
+            <Icon name="home" color={tintColor} type="ionicon" size={30} />
+          );
         },
       },
     },
     Leaderboard: {
       screen: Leaderboard,
       navigationOptions: {
-        tabBarIcon: () => {
-          return <Icon name="podium" color="#496E98" type="ionicon" size={30} />;
+        tabBarIcon: ({tintColor}) => {
+          return (
+            <Icon name="podium" color={tintColor} type="ionicon" size={30} />
+          );
         },
       },
     },
     Historic: {
       screen: Historic,
       navigationOptions: {
-        tabBarIcon: () => {
-          return <Icon name="history" color="#496E98" type="material" size={30} />;
+        tabBarIcon: ({tintColor}) => {
+          return (
+            <Icon name="history" color={tintColor} type="material" size={30} />
+          );
         },
       },
     },
@@ -38,17 +44,8 @@ const AppNavigator = createBottomTabNavigator(
     tabBarOptions: {
       showLabel: false,
       showIcon: true,
-      activeBackgroundColor: '#DDDDDD',
-      inactiveBackgroundColor: '#FFFFFF',
+      activeTintColor: '#496E98',
     },
   },
 );
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 30,
-    height: 30,
-  },
-});
-
 export default createAppContainer(AppNavigator);

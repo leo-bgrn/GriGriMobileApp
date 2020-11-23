@@ -8,8 +8,13 @@ class LeaderboardPlaces extends React.Component {
       <FlatList
         style={styles.list}
         data={this.props.ranks}
-        keyExtractor={(item) => Number(item.id).toString()}
-        renderItem={({item}) => <LeaderboardPlace user={item} />}
+        keyExtractor={(item) => this.props.ranks.indexOf(item).toString()}
+        renderItem={({item}) => (
+          <LeaderboardPlace
+            user={item}
+            index={this.props.ranks.indexOf(item)}
+          />
+        )}
       />
     );
   }

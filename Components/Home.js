@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, ActivityIndicator, Dimensions, Text} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import CurrentPerson from './CurrentPerson';
-import {getCurrentLocation, getUsers, postNewLocation} from '../API/GriGriApi';
+import {getUsers, getCurrentLocation, postNewLocation} from '../API/GriGriApi';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import ModalSelectUser from './ModalSelectUser';
@@ -9,6 +9,8 @@ import ModalConfirmation from './ModalConfirmation';
 import {connect} from 'react-redux';
 import {Button} from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import * as Animatable from 'react-native-animatable';
+import LottieView from 'lottie-react-native';
 
 class Home extends React.Component {
   constructor(props) {
@@ -35,28 +37,57 @@ class Home extends React.Component {
   _displayLoading() {
     return (
       <View style={styles.loading_container}>
-        <ActivityIndicator size="large" />
+        <LottieView
+          source={require('../Animations/loading-dots.json')}
+          autoPlay
+          loop
+          style={{width: windowWidth * 0.3, aspectRatio: 1}}
+          colorFilters={[
+            {
+              keypath: 'Shape Layer 1',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 2',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 3',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 4',
+              color: '#496E98',
+            },
+            {
+              keypath: 'Shape Layer 5',
+              color: '#496E98',
+            },
+          ]}
+        />
       </View>
     );
   }
 
   _loadData() {
     this.setState({isLoading: true});
-    getCurrentLocation().then((data) => {
-      getUsers().then((users) => {
-        const since = new Date(data.since);
-        this.setState({
-          user: data.user,
-          username: data.user.name,
-          totalPoints: Math.floor(data.user.totalPoints),
-          pointsDueToNow: Math.floor(data.user.pointsDueToNow),
-          since: since,
-          lastUser: data.lastUser,
-          isLoading: false,
-          allUsers: users,
+    setTimeout(() => {
+      getCurrentLocation().then((data) => {
+        getUsers().then((users) => {
+          const since = new Date(data.since);
+          this.setState({
+            user: data.user,
+            username: data.user.name,
+            totalPoints: Math.floor(data.user.totalPoints),
+            pointsDueToNow: Math.floor(data.user.pointsDueToNow),
+            since: since,
+            lastUser: data.lastUser,
+            isLoading: false,
+            allUsers: users,
+          });
         });
       });
-    });
+    }, 500);
   }
 
   componentDidMount() {
@@ -97,13 +128,26 @@ class Home extends React.Component {
     }
   }
 
+  displayDeleteCache() {
+    return (
+      <Button
+        buttonStyle={styles.button_style}
+        titleStyle={styles.title_button_style}
+        onPress={this._deleteCache}
+        title="Delete cache"
+      />
+    );
+  }
+
   render() {
     if (this.state.isLoading) {
       return this._displayLoading();
     }
     return (
-      <View style={styles.main_container}>
-        <View style={styles.currentPersonContainer}>
+      <Animatable.View style={styles.main_container}>
+        <Animatable.View
+          animation="slideInDown"
+          style={styles.currentPersonContainer}>
           <CurrentPerson
             user={this.state.user}
             totalPoints={this.state.totalPoints}
@@ -111,8 +155,11 @@ class Home extends React.Component {
             since={this.state.since}
             lastUser={this.state.lastUser}
           />
-        </View>
-        <View style={styles.buttonContainer}>
+        </Animatable.View>
+        <Animatable.View
+          animation="fadeIn"
+          delay={1000}
+          style={styles.buttonContainer}>
           {this.props.whoAmI === this.state.username && (
             <Button
               buttonStyle={styles.button_style}
@@ -121,13 +168,7 @@ class Home extends React.Component {
               title="Je l'ai refilé à quelqu'un"
             />
           )}
-          <Button
-            buttonStyle={styles.button_style}
-            titleStyle={styles.title_button_style}
-            onPress={this._deleteCache}
-            title="Delete cache"
-          />
-        </View>
+        </Animatable.View>
         <Modal isVisible={this.state.modalSelectUserIsVisible}>
           <ModalSelectUser
             cancelButton={this.toggleModalSelectUser}
@@ -143,11 +184,11 @@ class Home extends React.Component {
             sendGrigriTo={this.sendGrigriTo}
           />
         </Modal>
-      </View>
+      </Animatable.View>
     );
   }
 }
-
+const windowWidth = Dimensions.get('window').width;
 const styles = EStyleSheet.create({
   main_container: {
     flex: 1,
@@ -172,16 +213,17 @@ const styles = EStyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: "-10rem",
+    marginTop: '-10rem',
   },
   loading_container: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    backgroundColor: '#EBEBEB',
   },
   button_style: {
     backgroundColor: '#496E98',
-    marginTop: "15rem",
+    marginTop: '15rem',
     borderRadius: 10,
   },
   title_button_style: {

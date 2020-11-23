@@ -1,22 +1,26 @@
 import React from 'react';
 import {View, Image, Text, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import * as Animatable from 'react-native-animatable';
 
 class LeaderboardPlace extends React.Component {
   render() {
-    const {user} = this.props;
+    const {user, index} = this.props;
     const userFourthAvatar =
       user != null ? {uri: user.avatar} : {uri: defaultAvatarUrl};
     const userFourthName = user != null ? user.name : '?';
     const userFourthPoints = user != null ? user.points : '?';
     return (
-      <View style={styles.container}>
+      <Animatable.View
+        animation="slideInRight"
+        delay={2600 + 300 * index}
+        style={styles.container}>
         <View style={styles.avatarContainer}>
           <Image source={userFourthAvatar} style={styles.avatar} />
         </View>
         <Text style={styles.pseudoText}>{userFourthName}</Text>
         <Text style={styles.pointsText}>{userFourthPoints} points</Text>
-      </View>
+      </Animatable.View>
     );
   }
 }
