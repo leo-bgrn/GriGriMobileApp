@@ -1,11 +1,6 @@
 import React from 'react';
 import {getUsers} from '../API/GriGriApi';
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Text,
-} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Text} from 'react-native';
 import SelectUserItem from './SelectUserItem';
 import {connect} from 'react-redux';
 
@@ -81,8 +76,8 @@ const styles = StyleSheet.create({
     flex: 0.6,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   loading_container: {
     alignItems: 'center',
